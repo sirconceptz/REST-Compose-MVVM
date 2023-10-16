@@ -2,9 +2,11 @@ package com.hermanowicz.restcomposemvvm.features.list.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.hermanowicz.restcomposemvvm.data.mapper.toSingleCurrencyList
 import com.hermanowicz.restcomposemvvm.domain.GetCurrencyRatesUseCase
 import com.hermanowicz.restcomposemvvm.features.list.state.ListUiState
 import com.hermanowicz.restcomposemvvm.model.CurrencyRates
+import com.hermanowicz.restcomposemvvm.model.SingleCurrency
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,12 +26,14 @@ class ListViewModel @Inject constructor(
     init {
         viewModelScope.launch(Dispatchers.IO) {
             getCurrencyRatesUseCase().collect {
-                updateCurrencyRatesState(it)
+                if(it.isSuccessful) {
+                    updateCurrencyRatesState(it.body()!!.rates.toSingleCurrencyList())
+                }
             }
         }
     }
 
-    private fun updateCurrencyRatesState(currencyRates: CurrencyRates?) {
-        _uiState.update { it.copy(currencyRates = currencyRates) }
+    private fun updateCurrencyRatesState(currencyList: List<SingleCurrency>) {
+        _uiState.update { it.copy(currencyList = currencyList) }
     }
 }

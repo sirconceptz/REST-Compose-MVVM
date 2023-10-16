@@ -10,6 +10,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.hermanowicz.restcomposemvvm.model.SingleCurrency
 
@@ -38,8 +39,8 @@ fun CardPrimary(
 fun CurrencyItem(singleCurrency: SingleCurrency) {
     CardPrimary {
         Column(modifier = Modifier.fillMaxWidth().padding(4.dp)) {
-            Text(singleCurrency.name)
-            Text(singleCurrency.rate.toString())
+            Text(singleCurrency.name, color = Color.White)
+            Text(singleCurrency.rate.toString(), color = Color.White)
         }
     }
 }

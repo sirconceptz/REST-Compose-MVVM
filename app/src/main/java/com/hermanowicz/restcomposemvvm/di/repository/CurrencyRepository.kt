@@ -7,9 +7,10 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.flow.Flow
+import retrofit2.Response
 
 interface CurrencyRepository {
-    suspend fun getCurrencyRates(): Flow<CurrencyRates>
+    suspend fun getCurrencyRates(): Flow<Response<CurrencyRates>>
 }
 
 @Module
